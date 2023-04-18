@@ -1,0 +1,22 @@
+$color-menu: #00152a;
+$color-navbar: #f4f5f7;
+
+.container {
+    h3 {
+        font-weight: 600;
+    }
+    .table {
+        thead {
+            background-color: $color-navbar;
+        }
+        tbody {
+            td {
+                button {
+                    border-radius: 50%;
+                    border-color: $color-navbar;
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+}
