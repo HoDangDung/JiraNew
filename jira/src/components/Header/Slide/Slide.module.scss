@@ -45,18 +45,16 @@ $color-navbar: #f4f5f7;
     display: flex;
     justify-content: center;
 
-    .project {
-        .logo {
-            display: grid;
-            grid-template-columns: 30% 80%;
-            place-items: center;
-            padding-top: 1rem;
-            cursor: pointer;
-        }
-        .item {
-            padding-top: 1rem;
-            cursor: pointer;
-        }
+    .logo {
+        display: grid;
+        grid-template-columns: 30% 80%;
+        place-items: center;
+        padding: 1rem 0;
+        cursor: pointer;
+    }
+    .item {
+        padding-top: 1rem;
+        cursor: pointer;
     }
 }
 

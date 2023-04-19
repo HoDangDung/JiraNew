@@ -39,14 +39,14 @@
   display: flex;
   justify-content: center;
 }
-.menu .project .logo {
+.menu .logo {
   display: grid;
   grid-template-columns: 30% 80%;
   place-items: center;
-  padding-top: 1rem;
+  padding: 1rem 0;
   cursor: pointer;
 }
-.menu .project .item {
+.menu .item {
   padding-top: 1rem;
   cursor: pointer;
 }

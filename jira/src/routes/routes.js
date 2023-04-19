@@ -12,16 +12,24 @@ import UpdateTask from "../modules/Task/UpdateTask";
 const routes = createBrowserRouter([
     {
         path: "/",
-        element: <RootLayout/>,
+        element: <RootLayout />,
         errorElement: <ErrorBoundary />,
         children: [
             { index: true, element: <Home /> },
-            { path: "user/Login", element: <Login /> },
             { path: "user/Assign", element: <Assign /> },
             { path: "/createProject", element: <AddProject /> },
             { path: "/updateProject/:id", element: <UpdateProject /> },
             { path: "/createTask", element: <CreateTask /> },
             { path: "/updateTask/:id", element: <UpdateTask /> },
+        ]
+    },
+
+    // Authentication
+    {
+        path: "",
+        element: <Login />,
+        children: [
+            { path: "/signin", element: <Login /> },
         ]
     }
 ])

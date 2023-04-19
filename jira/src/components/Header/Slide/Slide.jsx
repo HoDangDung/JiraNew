@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
 import styles from "./Slide.module.css";
+import { Link } from "react-router-dom";
 
 const Slide = () => {
   const [width, setWidth] = useState();
@@ -32,14 +33,14 @@ const Slide = () => {
 
       <div className={styles.menu}>
         <div className="project">
-          <span
-            style={{ fontSize: "30", cursor: "pointer" }}
+          <div
+            style={{ fontSize: "30", cursor: "pointer", textAlign:"end"}}
             onclick={() => openNav()}
           >
             ☰
-          </span>
-          <div className="logo">
-            <img src alt="logo" />
+          </div>
+          <div className={styles.logo}>
+            <img src="" alt="logo" />
             <span className="heading">
               <h5>Cyberlearn.vn</h5>
               Reaport bug
@@ -47,12 +48,16 @@ const Slide = () => {
           </div>
           <div className="listProject">
             <div className="item">
-              <i className="fa-solid fa-gear" />
-              Project Management
+              <Link to="/">
+                <i className="fa-solid fa-gear" />
+                Project Management
+              </Link>
             </div>
             <div className="item">
-              <i className="fa-solid fa-gear" />
-              Create Project
+              <Link to="/createProject">
+                <i className="fa-solid fa-gear" />
+                Create Project
+              </Link>
             </div>
           </div>
         </div>

@@ -3,10 +3,12 @@ import cn from "classnames";
 import { useNavigate } from "react-router-dom";
 import projectAPI from "../../services/projectAPI";
 import styles from "./Project.module.css";
+import UpdateProject from "./UpdateProject/UpdateProject";
 
 const Project = () => {
   const navigate = useNavigate();
   const [project, setProject] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -18,10 +20,6 @@ const Project = () => {
       }
     })();
   }, []);
-
-  const getChar = (params) => {
-    return params.charArt(0);
-  };
 
   return (
     <>
@@ -64,7 +62,12 @@ const Project = () => {
                   </button>
                 </td>
                 <td>
-                  <button className="btn btn-primary">Edit</button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => setIsOpen(true)}
+                  >
+                    Edit
+                  </button>
                 </td>
                 <td>
                   <button className="btn btn-danger">Delete</button>
@@ -74,6 +77,7 @@ const Project = () => {
           </tbody>
         </table>
       </div>
+      <UpdateProject isOpen={isOpen} onClose={isOpen} />
     </>
   );
 };

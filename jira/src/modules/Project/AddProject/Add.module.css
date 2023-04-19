@@ -1,0 +1,83 @@
+.style {
+  /* ==========================================================================
+     WYSIWYG
+     ========================================================================== */
+  /* ==========================================================================
+     Buttons
+     ========================================================================== */
+}
+.style .title {
+  position: relative;
+  display: block;
+  padding-bottom: 0;
+  border-bottom: 3px double #dcdcdc;
+  margin-bottom: 30px;
+}
+.style .title h1,
+.style .title h2,
+.style .title h3,
+.style .title h4 {
+  margin: 5px;
+}
+.style .title::before {
+  width: 15%;
+  height: 3px;
+  background: #53bdff;
+  position: absolute;
+  bottom: -3px;
+  content: "";
+}
+.style a {
+  color: #53bdff;
+  text-decoration: none;
+  outline: 0;
+}
+.style a:hover {
+  color: #06a0ff;
+  text-decoration: none;
+}
+.style p {
+  margin: 10px 0;
+}
+.style #editor {
+  resize: vertical;
+  overflow: auto;
+  line-height: 1.5;
+  background-color: #fafafa;
+  background-image: none;
+  border: 0;
+  border-bottom: 1px solid #3b8dbd;
+  min-height: 150px;
+  box-shadow: none;
+  padding: 8px 16px;
+  margin: 0 auto;
+  font-size: 14px;
+  transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+.style #editor:focus {
+  background-color: #f0f0f0;
+  border-color: #38af5b;
+  box-shadow: none;
+  outline: 0 none;
+}
+.style .btn {
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+  font-size: 1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border: none;
+  border-bottom: 0.15em solid black;
+  padding: 0.65em 1.3em;
+}
+.style .btn-xs {
+  font-size: 0.8em;
+  padding: 0.25em 0.75em;
+}
+.style .btn-default {
+  border-color: #d9d9d9;
+  background-image: linear-gradient(#ffffff, #f2f2f2);
+}
+.style .btn-default:hover {
+  background: linear-gradient(#f2f2f2, #e6e6e6);
+}/*# sourceMappingURL=Add.module.css.map */
