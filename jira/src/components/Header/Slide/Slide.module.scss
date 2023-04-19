@@ -13,25 +13,26 @@ $color-navbar: #f4f5f7;
     transition: 0.5s;
     padding-top: 60px;
 
-    a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
-        transition: 0.3s;
-    }
-
-    a:hover {
-        color: #f1f1f1;
-    }
-
     .closebtn {
         position: absolute;
         top: 0;
         right: 25px;
         font-size: 36px;
         margin-left: 50px;
+    }
+}
+
+.listProject {
+    svg {
+        margin-right: 0.5rem;
+    }
+    
+    a {
+        text-decoration: none;
+        font-size: 16px;
+        color: $color-menu;
+        display: block;
+        transition: 0.3s;
     }
 }
 

@@ -1,41 +1,31 @@
-import { React, useEffect, useState } from "react";
-import styles from "./Slide.module.css";
+import { React } from "react";
 import { Link } from "react-router-dom";
+import { AiOutlineUnorderedList } from "react-icons/ai";
+import { IoSettingsSharp } from "react-icons/io5";
+import styles from "./Slide.module.css";
+import cn from "classnames";
 
 const Slide = () => {
-  const [width, setWidth] = useState();
-
-  const openNav = useEffect(() => {
-    const element = document.getElementById("mySidenav");
-    element.style.width = "178px";
-  }, []);
-
-  const closeNav = useEffect(() => {
-    const element = document.getElementById("mySidenav");
-    element.style.width = "0";
-  }, []);
+  const handleOpen = () => {};
 
   return (
     <>
       <header>
         <div id="mySidenav" className={styles.sidenav}>
-          <a
-            href="javascript:void(0)"
-            className="closebtn"
-            onclick={() => closeNav()}
-          >
-            <i className="fa-solid fa-list" />
-          </a>
-          <a href="#">Create task</a>
-          <a href="#">Search</a>
+          <div className="pe-4" style={{ textAlign: "end" }}>
+            <AiOutlineUnorderedList
+              style={{ fontSize: "30", cursor: "pointer", color: "white" }}
+            />
+          </div>
+          <Link to="/createTask">Create task</Link>
+          <Link href="#">Search</Link>
         </div>
       </header>
-
       <div className={styles.menu}>
         <div className="project">
           <div
-            style={{ fontSize: "30", cursor: "pointer", textAlign:"end"}}
-            onclick={() => openNav()}
+            style={{ fontSize: "30", cursor: "pointer", textAlign: "end" }}
+            onClick={() => handleOpen()}
           >
             ☰
           </div>
@@ -46,16 +36,16 @@ const Slide = () => {
               Reaport bug
             </span>
           </div>
-          <div className="listProject">
-            <div className="item">
+          <div className={styles.listProject}>
+            <div className="item py-3">
               <Link to="/">
-                <i className="fa-solid fa-gear" />
+                <IoSettingsSharp />
                 Project Management
               </Link>
             </div>
             <div className="item">
               <Link to="/createProject">
-                <i className="fa-solid fa-gear" />
+                <IoSettingsSharp />
                 Create Project
               </Link>
             </div>

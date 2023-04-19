@@ -1,8 +1,19 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Editor } from "@tinymce/tinymce-react";
+import categoryAPI from "../../../services/categoryAPI";
 
 const AddProject = () => {
+  /**
+ * {
+  "projectName": "string",
+  "description": "string",
+  "categoryId": 0,
+  "alias": "string"
+}
+ */
+
+  const [category, setCategory] = useState([]);
   const { register, handleSubmit } = useForm({
     defaultValues: {
       projectName: "",
@@ -11,76 +22,93 @@ const AddProject = () => {
       alias: "",
     },
   });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await categoryAPI.getProjectCategory();
+        setCategory(data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   const editorRef = useRef(null);
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
+
+  const onSubmit = async (data) => {
+    console.log(data);
   };
+  console.log(category);
   return (
-    <div className="py-4">
+    <div className="py-5">
       <h1>Create Project</h1>
-      <div className="form-group">
-        <label htmlFor>Name</label>
-        <input
-          type="text"
-          className="form-control"
-          aria-describedby="helpId"
-          placeholder
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor>Description</label>
-        <div className="form-control">
-          <Editor
-            apiKey="2q64dgg6fecbk2vxho74u30vs8krm3j0jemmovo1gsdq90og"
-            onInit={(evt, editor) => (editorRef.current = editor)}
-            initialValue="<p>This is the initial content of the editor.</p>"
-            init={{
-              height: 500,
-              menubar: false,
-              plugins: [
-                "advlist",
-                "autolink",
-                "lists",
-                "link",
-                "image",
-                "charmap",
-                "preview",
-                "anchor",
-                "searchreplace",
-                "visualblocks",
-                "code",
-                "fullscreen",
-                "insertdatetime",
-                "media",
-                "table",
-                "code",
-                "help",
-                "wordcount",
-              ],
-              toolbar:
-                "undo redo | blocks | " +
-                "bold italic forecolor | alignleft aligncenter " +
-                "alignright alignjustify | bullist numlist outdent indent | " +
-                "removeformat | help",
-              content_style:
-                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-            }}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="form-group">
+          <label>Name</label>
+          <input
+            className="form-control"
+            type="text"
+            {...register("projectName")}
           />
         </div>
-      </div>
-      <div className="form-group">
-        <label></label>
-        <select className="form-control" name>
-          <option>Dự án web</option>
-          <option>Dự án web</option>
-          <option>Dự án web</option>
-        </select>
-      </div>
-      <div className="form-group pt-3">
-        <button className="btn btn-outline-primary">Create project</button>
-      </div>
+        <div className="form-group">
+          <label >Description</label>
+          <div className="form-control">
+            <Editor
+            value=""
+            {...register("description")}
+              apiKey="2q64dgg6fecbk2vxho74u30vs8krm3j0jemmovo1gsdq90og"
+              onInit={(evt, editor) => (editorRef.current = editor)}
+              initialValue="<p>This is the initial content of the editor.</p>"
+              init={{
+                height: 500,
+                menubar: false,
+                plugins: [
+                  "advlist",
+                  "autolink",
+                  "lists",
+                  "link",
+                  "image",
+                  "charmap",
+                  "preview",
+                  "anchor",
+                  "searchreplace",
+                  "visualblocks",
+                  "code",
+                  "fullscreen",
+                  "insertdatetime",
+                  "media",
+                  "table",
+                  "code",
+                  "help",
+                  "wordcount",
+                ],
+                toolbar:
+                  "undo redo | blocks | " +
+                  "bold italic forecolor | alignleft aligncenter " +
+                  "alignright alignjustify | bullist numlist outdent indent | " +
+                  "removeformat | help",
+                content_style:
+                  "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+              }}
+            />
+          </div>
+        </div>
+        <div className="form-group">
+          <label></label>
+          <select className="form-control" {...register("categoryId")}>
+            {category.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.projectCategoryName}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group pt-3">
+          <button className="btn btn-outline-primary">Create project</button>
+        </div>
+      </form>
     </div>
   );
 };

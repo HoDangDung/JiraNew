@@ -1,13 +1,12 @@
 import React, { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
-const UpdateProject = ({ isOpen, onClose }) => {
+const UpdateProject = ({onClose, value, member }) => {
   const editorRef = useRef(null);
-
-  if (!isOpen) {
+  console.log(member);
+  if (!value) {
     return null;
   }
-
   return (
     <>
       {/* Modal */}
@@ -37,7 +36,7 @@ const UpdateProject = ({ isOpen, onClose }) => {
                     type="text"
                     className="form-control"
                     aria-describedby="helpId"
-                    placeholder
+                    placeholder={member.id}
                   />
                 </div>
                 <div className="form-group col-sm-4">
@@ -46,14 +45,13 @@ const UpdateProject = ({ isOpen, onClose }) => {
                     type="text"
                     className="form-control"
                     aria-describedby="helpId"
-                    placeholder
+                    placeholder = {member.projectName}
                   />
                 </div>
                 <div className="form-group col-sm-4">
                   <h5 htmlFor>Project Category</h5>
                   <select className="form-control" name>
-                    <option>Dự án web</option>
-                    <option>Dự án web</option>
+                    <option>{member.categoryName}</option>
                     <option>Dự án web</option>
                   </select>
                 </div>

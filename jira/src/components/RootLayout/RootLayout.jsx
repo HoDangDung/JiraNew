@@ -4,11 +4,11 @@ import Header from "../Header/Header";
 
 const RootLayout = () => {
   return (
-    <div className="row">
-      <div className="col-sm-3">
+    <div className="row w-100">
+      <div className="col-sm-4">
         <Header />
       </div>
-      <div className="col-sm-7">
+      <div className="col-sm-6">
         <Outlet />
       </div>
     </div>

@@ -10,23 +10,23 @@
   transition: 0.5s;
   padding-top: 60px;
 }
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-.sidenav a:hover {
-  color: #f1f1f1;
-}
 .sidenav .closebtn {
   position: absolute;
   top: 0;
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+}
+
+.listProject svg {
+  margin-right: 0.5rem;
+}
+.listProject a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #00152a;
+  display: block;
+  transition: 0.3s;
 }
 
 .menu {

@@ -1,14 +1,18 @@
-import React, { Component, useEffect, useState } from "react";
-import cn from "classnames";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useBoolean } from "usehooks-ts";
+import { BsTrash } from "react-icons/bs";
+import { BiEdit } from "react-icons/bi";
 import projectAPI from "../../services/projectAPI";
-import styles from "./Project.module.css";
 import UpdateProject from "./UpdateProject/UpdateProject";
+import cn from "classnames";
+import styles from "./Project.module.css";
 
 const Project = () => {
   const navigate = useNavigate();
   const [project, setProject] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [members, setMembers] = useState([]);
+  const { value, setTrue, setFalse } = useBoolean(false);
 
   useEffect(() => {
     (async () => {
@@ -21,9 +25,13 @@ const Project = () => {
     })();
   }, []);
 
+  const handleSelect = (member) => {
+    setMembers(member);
+    setTrue();
+  };
+
   return (
     <>
-      {console.log(project)}
       <div className={cn(styles.container, "container py-5")}>
         <h3>Project management</h3>
         <table className="table">
@@ -45,14 +53,19 @@ const Project = () => {
                 <td>{item.projectName}</td>
                 <td>{item.categoryName}</td>
                 <td>
-                  <span key={item.creator.id}>{item.creator.name}</span>
+                  <button
+                    className="btn btn-outline-warning"
+                    key={item.creator.id}
+                  >
+                    {item.creator.name}
+                  </button>
                 </td>
                 <td>
                   {item.members.map((member) => (
                     <button
                       key={member.userId}
                       type="button"
-                      className="btn btn-outline-info me-2 text-dark rounded-circle"
+                      className="btn btn-outline-info me-2 text-dark"
                     >
                       {member.name}
                     </button>
@@ -64,20 +77,22 @@ const Project = () => {
                 <td>
                   <button
                     className="btn btn-primary"
-                    onClick={() => setIsOpen(true)}
+                    onClick={() => handleSelect(item)}
                   >
-                    Edit
+                    <BiEdit />
                   </button>
                 </td>
                 <td>
-                  <button className="btn btn-danger">Delete</button>
+                  <button className="btn btn-danger">
+                    <BsTrash />
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <UpdateProject isOpen={isOpen} onClose={isOpen} />
+      <UpdateProject onClose={setFalse} value={value} member={members} />
     </>
   );
 };
