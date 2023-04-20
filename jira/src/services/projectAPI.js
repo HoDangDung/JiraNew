@@ -2,8 +2,7 @@ import fetcher from "./fetcher";
 
 const projectAPI = {
     getAllProject: async () => {
-        const { data } = await fetcher.get("Project/getAllProject");
-        return data.content;
+        return await fetcher.get("Project/getAllProject");
     },
 
     createProject: (project) => {
@@ -26,6 +25,10 @@ const projectAPI = {
     },
     createTask: () => {
         return fetcher.post("Project/assignUserTask");
+    },
+
+    createAssign: () => {
+        return fetcher.post("Project/assignUserProject");
     }
 }
 

@@ -7,4 +7,29 @@ const fetcher = axios.create({
     },
 });
 
+// inteceptors
+fetcher.interceptors.response.use(
+    (response) => {
+        return response.data.content;
+    },
+    (error) => {
+        return Promise.reject(error.response.data.content);
+    }
+);
+
+fetcher.interceptors.request.use(
+    (config) => {
+        // Thêm key Authorization vào header config
+        const { accessToken } = JSON.parse(localStorage.getItem("user")) || {};
+        if (accessToken) {
+            config.headers.Authorization = `Bearer ${accessToken}`;
+        }
+
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 export default fetcher;

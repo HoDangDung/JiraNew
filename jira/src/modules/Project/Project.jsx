@@ -7,12 +7,14 @@ import projectAPI from "../../services/projectAPI";
 import UpdateProject from "./UpdateProject/UpdateProject";
 import cn from "classnames";
 import styles from "./Project.module.css";
+import Assign from "../User/Assign/Assign";
+import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";
 
 const Project = () => {
   const navigate = useNavigate();
   const [project, setProject] = useState([]);
   const [members, setMembers] = useState([]);
-  const { value, setTrue, setFalse } = useBoolean(false);
+  const { value, setTrue, setFalse, toggle } = useBoolean(false);
 
   useEffect(() => {
     (async () => {
@@ -28,6 +30,17 @@ const Project = () => {
   const handleSelect = (member) => {
     setMembers(member);
     setTrue();
+  };
+
+  const getChar = (name) => {
+    let result = [];
+    result.push(name.charAt(0));
+    for (let index = 0; index < name.length; index++) {
+      if (name[index] === " ") {
+        result.push(...name[index + 1]);
+      }
+    }
+    return result.join("");
   };
 
   return (
@@ -65,9 +78,10 @@ const Project = () => {
                     <button
                       key={member.userId}
                       type="button"
-                      className="btn btn-outline-info me-2 text-dark"
+                      className="btn btn-outline-info rounded-circle me-2 text-dark"
                     >
-                      {member.name}
+                      {console.log(member.name)}
+                      {getChar(member.name)}
                     </button>
                   ))}
                   <button className="btn btn-outline-info me-2 text-dark rounded-circle">
@@ -92,6 +106,7 @@ const Project = () => {
           </tbody>
         </table>
       </div>
+      <Assign value={value} onChange={toggle} />
       <UpdateProject onClose={setFalse} value={value} member={members} />
     </>
   );

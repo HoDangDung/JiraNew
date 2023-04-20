@@ -21,15 +21,15 @@ const CreateTask = () => {
             <hr />
             <div className="modal-body">
               <form className="form-group">
-                <label htmlFor="">Project</label>
+                <label >Project</label>
                 <select className="form-control">
-                  <option></option>
-                  <option></option>
-                  <option></option>
+                  <option>Dự án web</option>
+                  <option>Dự án web</option>
+                  <option>Dự án web</option>
                 </select>
               </form>
               <div className="form-group">
-                <label htmlFor="">Task name</label>
+                <label >Task name</label>
                 <input
                   type="text"
                   className="form-control"
@@ -38,7 +38,7 @@ const CreateTask = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="">Status</label>
+                <label >Status</label>
                 <select className="form-control">
                   <option></option>
                   <option></option>
@@ -48,7 +48,7 @@ const CreateTask = () => {
               <div className="row">
                 <div className="col-sm-6">
                   <div className="form-group">
-                    <label htmlFor="">Priority</label>
+                    <label >Priority</label>
                     <select className="form-control">
                       <option></option>
                       <option></option>
@@ -57,7 +57,7 @@ const CreateTask = () => {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="">Assignees</label>
+                    <label >Assignees</label>
                     <input
                       type="text"
                       className="form-control"
@@ -66,7 +66,7 @@ const CreateTask = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="">Original Estimate</label>
+                    <label >Original Estimate</label>
                     <input
                       type="number"
                       className="form-control"
@@ -78,7 +78,7 @@ const CreateTask = () => {
 
                 <div className="col-sm-6">
                   <div className="form-group">
-                    <label htmlFor="">Task type</label>
+                    <label >Task type</label>
                     <select className="form-control">
                       <option></option>
                       <option></option>
@@ -86,7 +86,7 @@ const CreateTask = () => {
                     </select>
                   </div>
                   <div className="form-group py-2">
-                    <label htmlFor="">Time tracking</label>
+                    <label >Time tracking</label>
                     <div className="form-check">
                       <label className="form-check-label">
                         <input
@@ -102,7 +102,7 @@ const CreateTask = () => {
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="form-group">
-                        <label htmlFor="">Oh logged</label>
+                        <label >Oh logged</label>
                         <input
                           type="number"
                           className="form-control"
@@ -115,7 +115,7 @@ const CreateTask = () => {
                     </div>
                     <div className="col-sm-6">
                       <div className="form-group">
-                        <label htmlFor="">Oh remaining</label>
+                        <label >Oh remaining</label>
                         <input
                           type="number"
                           className="form-control"
@@ -130,7 +130,7 @@ const CreateTask = () => {
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="">Description</label>
+                <label >Description</label>
                 <Editor
                   apiKey="2q64dgg6fecbk2vxho74u30vs8krm3j0jemmovo1gsdq90og"
                   onInit={(evt, editor) => (editorRef.current = editor)}
