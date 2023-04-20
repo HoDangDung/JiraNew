@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useBoolean } from "usehooks-ts";
 import { BsTrash } from "react-icons/bs";
 import { BiEdit } from "react-icons/bi";
@@ -8,10 +7,8 @@ import UpdateProject from "./UpdateProject/UpdateProject";
 import cn from "classnames";
 import styles from "./Project.module.css";
 import Assign from "../User/Assign/Assign";
-import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";
 
 const Project = () => {
-  const navigate = useNavigate();
   const [project, setProject] = useState([]);
   const [members, setMembers] = useState([]);
   const { value, setTrue, setFalse, toggle } = useBoolean(false);
@@ -43,6 +40,13 @@ const Project = () => {
     return result.join("");
   };
 
+  const charLimit = (content)=>{
+    if(content.length > 20){
+      return content.substring(0,20)+"...";
+    }
+    return content;
+  }
+
   return (
     <>
       <div className={cn(styles.container, "container py-5")}>
@@ -63,7 +67,7 @@ const Project = () => {
             {project.map((item) => (
               <tr key={item.id}>
                 <td>{item.id}</td>
-                <td>{item.projectName}</td>
+                <td>{charLimit(item.projectName)}</td>
                 <td>{item.categoryName}</td>
                 <td>
                   <button
@@ -78,9 +82,8 @@ const Project = () => {
                     <button
                       key={member.userId}
                       type="button"
-                      className="btn btn-outline-info rounded-circle me-2 text-dark"
+                      className="btn btn-info rounded-circle me-2 text-dark"
                     >
-                      {console.log(member.name)}
                       {getChar(member.name)}
                     </button>
                   ))}
