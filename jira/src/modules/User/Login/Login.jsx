@@ -23,7 +23,7 @@ const Login = () => {
   };
 
   if (user) {
-    return <Navigate to="/project" />;
+    return <Navigate to="/project" replace />;
   }
 
   return (
