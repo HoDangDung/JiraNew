@@ -6,14 +6,7 @@ const projectAPI = {
     },
 
     createProject: (project) => {
-        return fetcher.post("Project/createProject", {
-            params: { project },
-        });
-    },
-    deleteProject: (projectId) => {
-        return fetcher.delete("Project/deleteProject", {
-            params: { projectId },
-        });
+        return fetcher.post("Project/createProjectAuthorize", project);
     },
     updateProject: (projectId) => {
         return fetcher.put("Project/updateProject",
@@ -23,12 +16,13 @@ const projectAPI = {
                 }
             });
     },
-    createTask: () => {
-        return fetcher.post("Project/assignUserTask");
+    
+    createTask: (task) => {
+        return fetcher.post("Project/assignUserTask", task);
     },
 
-    createAssign: () => {
-        return fetcher.post("Project/assignUserProject");
+    createAssign: (assign) => {
+        return fetcher.post("Project/assignUserProject",assign);
     }
 }
 

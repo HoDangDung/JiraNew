@@ -10,12 +10,20 @@ import CreateTask from "../modules/Task/CreateTask";
 import UpdateTask from "../modules/Task/UpdateTask";
 
 const routes = createBrowserRouter([
+    // Authentication
+    {
+        path: "/",
+        element: <Login />,
+        children: [
+            { path: "/signin", element: <Login /> },
+        ]
+    },
     {
         path: "/",
         element: <RootLayout />,
         errorElement: <ErrorBoundary />,
         children: [
-            { index: true, element: <Home /> },
+            { path:"/project", element: <Home /> },
             { path: "user/Assign", element: <Assign /> },
             { path: "/createProject", element: <AddProject /> },
             { path: "/updateProject/:id", element: <UpdateProject /> },
@@ -24,14 +32,6 @@ const routes = createBrowserRouter([
         ]
     },
 
-    // Authentication
-    {
-        path: "",
-        element: <Login />,
-        children: [
-            { path: "/signin", element: <Login /> },
-        ]
-    }
 ])
 
 export default routes;

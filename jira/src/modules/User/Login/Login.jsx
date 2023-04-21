@@ -1,19 +1,30 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import styles from "./Login.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { signin } from "../../../slices/authSlice";
 import cn from "classnames";
+import { Navigate } from "react-router-dom";
 
 const Login = () => {
-  const { register, handleSubmit, formState } = useForm({
+  const dispatch = useDispatch();
+  const { user, loading, error } = useSelector((state) => state.authSlice);
+  console.log(error);
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       email: "",
       passWord: "",
     },
+    mode: "onTouched",
   });
-  const { errors } = formState;
-  const onSubmit = (values) => {
+
+  const onSubmit = async (values) => {
     console.log(values);
+    dispatch(signin(values));
   };
+
+  if (user) {
+    return <Navigate to="/project" />;
+  }
 
   return (
     <div className="row" style={{ height: "100vh", width: "100%" }}>
@@ -24,24 +35,29 @@ const Login = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
               <input
-                {...register("email", { require: true })}
                 type="email"
                 className="form-control"
                 placeholder="Email"
-                />
-              {errors.email && <p>Tài khoản không được để trống</p>}
+                required
+                {...register("email")}
+              />
             </div>
             <div className="form-group py-3">
               <input
-                {...register("passWord", { require: true })}
                 type="password"
                 className="form-control"
                 placeholder="Password"
+                {...register("passWord", { require: true })}
+                required
               />
-              {errors.passWord && <p>Mật khẩu không được để trống</p>}
             </div>
             <div className="form-group text-center">
-              <button className="btn btn-primary form-control">Login</button>
+              <button
+                disabled={loading}
+                className="btn btn-primary form-control"
+              >
+                Login
+              </button>
             </div>
           </form>
         </div>

@@ -2,16 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Editor } from "@tinymce/tinymce-react";
 import categoryAPI from "../../../services/categoryAPI";
+import projectAPI from "../../../services/projectAPI";
 
-const AddProject = () => {
-  /**
- * {
-  "projectName": "string",
-  "description": "string",
-  "categoryId": 0,
-  "alias": "string"
+/**
+* {
+"projectName": "string",
+"description": "string",
+"categoryId": 0,
+"alias": "string"
 }
- */
+*/
+const AddProject = () => {
 
   const [category, setCategory] = useState([]);
   const { register, handleSubmit } = useForm({
@@ -37,9 +38,13 @@ const AddProject = () => {
   const editorRef = useRef(null);
 
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      await projectAPI.createProject(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
-  console.log(category);
+
   return (
     <div className="py-5">
       <h1>Create Project</h1>
@@ -53,14 +58,12 @@ const AddProject = () => {
           />
         </div>
         <div className="form-group">
-          <label >Description</label>
+          <label>Description</label>
           <div className="form-control">
-            <Editor
-            value=""
-            {...register("description")}
+            <textarea {...register("description")}/>
+            {/* <Editor
               apiKey="2q64dgg6fecbk2vxho74u30vs8krm3j0jemmovo1gsdq90og"
               onInit={(evt, editor) => (editorRef.current = editor)}
-              initialValue="<p>This is the initial content of the editor.</p>"
               init={{
                 height: 500,
                 menubar: false,
@@ -92,7 +95,7 @@ const AddProject = () => {
                 content_style:
                   "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
               }}
-            />
+            /> */}
           </div>
         </div>
         <div className="form-group">
