@@ -4,10 +4,14 @@ import { AiOutlineUnorderedList } from "react-icons/ai";
 import { IoSettingsSharp } from "react-icons/io5";
 import styles from "./Slide.module.css";
 import cn from "classnames";
+import { logout } from "../../../slices/authSlice";
 
 const Slide = () => {
   const handleOpen = () => {};
-
+  const handleLogout = () => {
+    console.log(logout);
+    return logout;
+  };
   return (
     <>
       <header>
@@ -17,12 +21,23 @@ const Slide = () => {
               style={{ fontSize: "30", cursor: "pointer", color: "white" }}
             />
           </div>
-          <Link to="/createTask">Create task</Link>
-          <Link href="#">Search</Link>
+          <ul>
+            <li>
+              <Link to="/createTask">Create task</Link>
+            </li>
+            <li>
+              <Link href="#">Search</Link>
+            </li>
+          </ul>
         </div>
       </header>
       <div className={styles.menu}>
         <div className="project">
+          <div>
+            <button className="btn btn-danger" onClick={() => handleLogout()}>
+              Logout
+            </button>
+          </div>
           <div
             style={{ fontSize: "30", cursor: "pointer", textAlign: "end" }}
             onClick={() => handleOpen()}

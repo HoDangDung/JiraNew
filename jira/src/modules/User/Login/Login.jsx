@@ -19,7 +19,10 @@ const Login = () => {
 
   const onSubmit = async (values) => {
     console.log(values);
-    dispatch(signin(values));
+    if(values){
+      dispatch(signin(values));
+      alert("Login success");
+    }
   };
 
   if (user) {

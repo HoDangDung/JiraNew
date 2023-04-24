@@ -1,8 +1,75 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import { useForm } from "react-hook-form";
+import { TextField } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
+import projectAPI from "../../../services/projectAPI";
+import taskAPI from "../../../services/taskAPI";
+import statusAPI from "../../../services/statusAPI";
+import priorityAPI from "../../../services/priorityAPI";
+import userAPI from "../../../services/userAPI";
+import { useSelector } from "react-redux";
+
+// "taskName": "string",
+// "description": "string",
+// "statusId": "string",
+// "originalEstimate": 0,
+// "timeTrackingSpent": 0,
+// "timeTrackingRemaining": 0,
+// "projectId": 0,
+// "typeId": 0,
+// "priorityId": 0
 
 const CreateTask = () => {
+  const [projects, setProject] = useState([]);
+  const [status, setStatus] = useState([]);
+  const [priorities, setPriority] = useState([]);
+  const [taskTypes, setTaskTypes] = useState([]);
+  const [users, setUser] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const project = await projectAPI.getAllProject();
+        setProject(project);
+        const status = await statusAPI.getAll();
+        setStatus(status);
+        const priority = await priorityAPI.getAll();
+        setPriority(priority);
+        const taskType = await taskAPI.getAllTask();
+        setTaskTypes(taskType);
+        const user = await userAPI.getUser();
+        setUser(user);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  const { register, handleSubmit } = useForm({
+    data: {
+      taskId: 0,
+      userId: 0,
+    },
+    defaultValues: {
+      listUserAssign: [0],
+      taskName: "",
+      description: "",
+      statusId: "",
+      originalEstimate: 0,
+      timeTrackingSpent: 0,
+      timeTrackingRemaining: 0,
+      projectId: 0,
+      typeId: 0,
+      priorityId: 0,
+    },
+  });
+
   const editorRef = useRef(null);
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   return (
     <>
@@ -19,110 +86,108 @@ const CreateTask = () => {
               <h3 className="modal-title">Create Task</h3>
             </div>
             <hr />
-            <div className="modal-body">
-              <form className="form-group">
-                <label >Project</label>
-                <select className="form-control">
-                  <option>Dự án web</option>
-                  <option>Dự án web</option>
-                  <option>Dự án web</option>
-                </select>
-              </form>
+            <form className="modal-body" onSubmit={handleSubmit(onSubmit)}>
               <div className="form-group">
-                <label >Task name</label>
+                <label>Project</label>
+                <select className="form-control" {...register("projectId")}>
+                  {projects.map((item) => (
+                    <option key={item.id}>{item.projectName}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Task name</label>
                 <input
                   type="text"
                   className="form-control"
                   aria-describedby="helpId"
-                  placeholder=""
+                  {...register("taskName")}
                 />
               </div>
               <div className="form-group">
-                <label >Status</label>
-                <select className="form-control">
-                  <option></option>
-                  <option></option>
-                  <option></option>
+                <label>Status</label>
+                <select className="form-control" {...register("statusId")}>
+                  {status.map((item) => (
+                    <option key={item.statusId}>{item.statusName}</option>
+                  ))}
                 </select>
               </div>
               <div className="row">
                 <div className="col-sm-6">
                   <div className="form-group">
-                    <label >Priority</label>
-                    <select className="form-control">
-                      <option></option>
-                      <option></option>
-                      <option></option>
+                    <label>Priority</label>
+                    <select
+                      className="form-control"
+                      {...register("priorityId")}
+                    >
+                      {priorities.map((item) => (
+                        <option key={item.priorityId}>{item.priority}</option>
+                      ))}
                     </select>
                   </div>
 
                   <div className="form-group">
-                    <label >Assignees</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      aria-describedby="helpId"
-                      placeholder=""
+                    <label>Assignees</label>
+                    <Autocomplete
+                      multiple
+                      id="tags-outlined"
+                      options={users.map((item) => item.name)}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Name"
+                          className="form-control"
+                        />
+                      )}
                     />
                   </div>
                   <div className="form-group">
-                    <label >Original Estimate</label>
+                    <label>Original Estimate</label>
                     <input
                       type="number"
                       className="form-control"
-                      aria-describedby="helpId"
-                      placeholder=""
+                      {...register("originalEstimate")}
                     />
                   </div>
                 </div>
 
                 <div className="col-sm-6">
                   <div className="form-group">
-                    <label >Task type</label>
-                    <select className="form-control">
-                      <option></option>
-                      <option></option>
-                      <option></option>
+                    <label>Task type</label>
+                    <select className="form-control" {...register("typeId")}>
+                      {taskTypes.map((item) => (
+                        <option key={item.id}>{item.taskType}</option>
+                      ))}
                     </select>
                   </div>
                   <div className="form-group py-2">
-                    <label >Time tracking</label>
+                    <label>Time tracking</label>
                     <div className="form-check">
-                      <label className="form-check-label">
-                        <input
-                          type="radio"
-                          className="form-check-input"
-                          defaultValue="checkedValue"
-                          defaultChecked
-                        />
-                        Display value
-                      </label>
+                      <label className="form-check-label"></label>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="form-group">
-                        <label >Oh logged</label>
+                        <label className="fw-bold">Oh logged</label>
+                        <br /> Time spent
                         <input
                           type="number"
                           className="form-control"
-                          name=""
-                          id=""
                           aria-describedby="helpId"
-                          placeholder=""
+                          {...register("timeTrackingSpent")}
                         />
                       </div>
                     </div>
                     <div className="col-sm-6">
                       <div className="form-group">
-                        <label >Oh remaining</label>
+                        <label className="fw-bold">Oh remaining</label>
+                        <br /> Time remaining
                         <input
                           type="number"
                           className="form-control"
-                          name=""
-                          id=""
                           aria-describedby="helpId"
-                          placeholder=""
+                          {...register("timeTrackingRemaining")}
                         />
                       </div>
                     </div>
@@ -130,7 +195,7 @@ const CreateTask = () => {
                 </div>
               </div>
               <div className="form-group">
-                <label >Description</label>
+                <label>Description</label>
                 <Editor
                   apiKey="2q64dgg6fecbk2vxho74u30vs8krm3j0jemmovo1gsdq90og"
                   onInit={(evt, editor) => (editorRef.current = editor)}
@@ -168,7 +233,7 @@ const CreateTask = () => {
                   }}
                 />
               </div>
-            </div>
+            </form>
             <div className="modal-footer pt-3">
               <button type="button" className="btn btn-secondary">
                 Cancel

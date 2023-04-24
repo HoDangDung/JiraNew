@@ -2,15 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { useForm } from "react-hook-form";
 import categoryAPI from "../../../services/categoryAPI";
+import projectAPI from "../../../services/projectAPI";
+import { Navigate } from "react-router-dom";
 
 const UpdateProject = ({ onClose, value, member }) => {
   const [category, setCategory] = useState([]);
   const { register, handleSubmit } = useForm({
     defaultValues: {
+      id: 0,
       projectName: "",
+      creator: 0,
       description: "",
       categoryId: "",
-      alias: "",
     },
   });
 
@@ -27,6 +30,16 @@ const UpdateProject = ({ onClose, value, member }) => {
 
   const editorRef = useRef(null);
 
+  const onSubmit = async (data) => {
+    try {
+      await projectAPI.updateProject(data);
+      alert("Update Project successfully");
+    } catch (error) {
+      alert("Update Project Fail");
+      console.log(error);
+    }
+  };
+
   if (!value) {
     return null;
   }
@@ -40,7 +53,7 @@ const UpdateProject = ({ onClose, value, member }) => {
         aria-hidden="true"
       >
         <div className="modal-dialog modal-lg">
-          <div className="modal-content">
+          <form className="modal-content" onSubmit={handleSubmit(onSubmit)}>
             <div className="modal-header">
               <h5 className="modal-title">Edit Project</h5>
               <button
@@ -68,15 +81,17 @@ const UpdateProject = ({ onClose, value, member }) => {
                     type="text"
                     className="form-control"
                     aria-describedby="helpId"
-                    placeholder={member.projectName}
+                    value={member.projectName}
                   />
                 </div>
                 <div className="form-group col-sm-4">
                   <h5>Project Category</h5>
                   <select className="form-control">
                     <option>{member.categoryName}</option>
-                    {category.map((item)=>(
-                      <option key={item.id} value={item.id}>{item.projectCategoryName}</option>
+                    {category.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.projectCategoryName}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -135,7 +150,7 @@ const UpdateProject = ({ onClose, value, member }) => {
                 Submit
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
 

@@ -4,16 +4,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import categoryAPI from "../../../services/categoryAPI";
 import projectAPI from "../../../services/projectAPI";
 
-/**
-* {
-"projectName": "string",
-"description": "string",
-"categoryId": 0,
-"alias": "string"
-}
-*/
 const AddProject = () => {
-
   const [category, setCategory] = useState([]);
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -39,8 +30,12 @@ const AddProject = () => {
 
   const onSubmit = async (data) => {
     try {
-      await projectAPI.createProject(data);
+      if (data) {
+        await projectAPI.createProject(data);
+        alert("Add Project successfully");
+      }
     } catch (error) {
+      alert("Add Project Fail");
       console.log(error);
     }
   };
@@ -60,8 +55,7 @@ const AddProject = () => {
         <div className="form-group">
           <label>Description</label>
           <div className="form-control">
-            <textarea {...register("description")}/>
-            {/* <Editor
+            <Editor
               apiKey="2q64dgg6fecbk2vxho74u30vs8krm3j0jemmovo1gsdq90og"
               onInit={(evt, editor) => (editorRef.current = editor)}
               init={{
@@ -95,7 +89,7 @@ const AddProject = () => {
                 content_style:
                   "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
               }}
-            /> */}
+            />
           </div>
         </div>
         <div className="form-group">

@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authAPI from "../services/authAPI";
+import { Navigate } from "react-router-dom";
 
 const initialState = {
-    user: null,
+    user: JSON.parse(localStorage.getItem("user")) || null,
     loading: false,
     error: null,
 };
@@ -13,6 +14,7 @@ export const signin = createAsyncThunk(
     async (values) => {
         try {
             const data = await authAPI.signin(values);
+            localStorage.setItem("user", JSON.stringify(data));
             return data;
         } catch (error) {
             throw error;
@@ -23,6 +25,12 @@ export const signin = createAsyncThunk(
 const authSlice = createSlice({
     name: "auth",
     initialState,
+    reducers: {
+        logout: (state, action) => {
+            localStorage.removeItem("user");
+            return (<Navigate to="/" />, { ...state, user: null });
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(signin.pending, (state, action) => {
             return { ...state, loading: true };
@@ -35,5 +43,7 @@ const authSlice = createSlice({
         });
     }
 });
+
+export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;

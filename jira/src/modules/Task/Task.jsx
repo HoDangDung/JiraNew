@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from "react";
+import CreateTask from "./CreateTask/CreateTask";
 
-class Task extends Component {
-    render() {
-        return (
-            <div>
-                <h1>Task</h1>
-            </div>
-        );
-    }
-}
+const Task = () => {
+  
+  return (
+    <>
+      <CreateTask />
+    </>
+  );
+};
 
 export default Task;
