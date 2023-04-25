@@ -16,7 +16,7 @@ const RootLayout = () => {
     <>
       <Slide transition={open} />
       <div className="row w-100" style={padding}>
-        <div className="col-lg-3 col-sm-4">
+        <div className="col-lg-3 col-sm-5">
           <Navbar transition={transition} />
         </div>
         <div className="col-lg-8 col-sm-6">

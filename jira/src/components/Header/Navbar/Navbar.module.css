@@ -1,4 +1,6 @@
 .menu {
+  min-height: 100vh;
+  position: fixed;
   padding-top: 1rem;
   width: 252px;
   height: 100vh;
@@ -17,13 +19,6 @@
 .menu .item {
   padding-top: 1rem;
   cursor: pointer;
-}
-
-ul li {
-  list-style: none;
-}
-ul li a {
-  text-decoration: none;
 }
 
 .listProject svg {

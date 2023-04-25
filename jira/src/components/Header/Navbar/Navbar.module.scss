@@ -1,6 +1,8 @@
-@import '../../../variable';
+@import "../../../variable";
 
 .menu {
+    min-height: 100vh;
+    position: fixed;
     padding-top: 1rem;
     width: 252px;
     height: 100vh;
@@ -21,26 +23,17 @@
         cursor: pointer;
     }
 }
-ul {
-    li {
-        list-style: none;
-        a {
-            text-decoration: none;
-        }
-    }
-}
-
 
 .listProject {
-svg {
-    margin-right: 0.5rem;
-}
+    svg {
+        margin-right: 0.5rem;
+    }
 
-a {
-    text-decoration: none;
-    font-size: 16px;
-    color: $color-menu;
-    display: block;
-    transition: 0.3s;
-}
+    a {
+        text-decoration: none;
+        font-size: 16px;
+        color: $color-menu;
+        display: block;
+        transition: 0.3s;
+    }
 }
