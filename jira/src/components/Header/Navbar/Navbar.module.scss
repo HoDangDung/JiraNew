@@ -1,0 +1,46 @@
+@import '../../../variable';
+
+.menu {
+    padding-top: 1rem;
+    width: 252px;
+    height: 100vh;
+    background-color: $color-navbar;
+    color: $color-menu;
+    display: flex;
+    justify-content: center;
+
+    .logo {
+        display: grid;
+        grid-template-columns: 30% 80%;
+        place-items: center;
+        padding: 1rem 0;
+        cursor: pointer;
+    }
+    .item {
+        padding-top: 1rem;
+        cursor: pointer;
+    }
+}
+ul {
+    li {
+        list-style: none;
+        a {
+            text-decoration: none;
+        }
+    }
+}
+
+
+.listProject {
+svg {
+    margin-right: 0.5rem;
+}
+
+a {
+    text-decoration: none;
+    font-size: 16px;
+    color: $color-menu;
+    display: block;
+    transition: 0.3s;
+}
+}

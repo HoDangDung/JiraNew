@@ -1,9 +1,7 @@
-$color-menu: #00152a;
-$color-navbar: #f4f5f7;
-
+@import "../../../variable";
 .sidenav {
     min-height: 100vh;
-    width: 178px;
+    width: 0;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -12,66 +10,4 @@ $color-navbar: #f4f5f7;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
-
-    .closebtn {
-        position: absolute;
-        top: 0;
-        right: 25px;
-        font-size: 36px;
-        margin-left: 50px;
-    }
-    ul {
-        li {
-            list-style: none;
-            a {
-                text-decoration: none;
-            }
-        }
-    }
-}
-
-.listProject {
-    svg {
-        margin-right: 0.5rem;
-    }
-
-    a {
-        text-decoration: none;
-        font-size: 16px;
-        color: $color-menu;
-        display: block;
-        transition: 0.3s;
-    }
-}
-
-.menu {
-    transition: 0.5s;
-    padding-top: 1rem;
-    width: 252px;
-    height: 100vh;
-    background-color: $color-navbar;
-    color: $color-menu;
-    display: flex;
-    justify-content: center;
-
-    .logo {
-        display: grid;
-        grid-template-columns: 30% 80%;
-        place-items: center;
-        padding: 1rem 0;
-        cursor: pointer;
-    }
-    .item {
-        padding-top: 1rem;
-        cursor: pointer;
-    }
-}
-
-@media screen and (max-height: 450px) {
-    .sidenav {
-        padding-top: 15px;
-    }
-    .sidenav a {
-        font-size: 18px;
-    }
 }

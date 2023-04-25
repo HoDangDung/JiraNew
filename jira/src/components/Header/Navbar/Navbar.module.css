@@ -1,0 +1,38 @@
+.menu {
+  padding-top: 1rem;
+  width: 252px;
+  height: 100vh;
+  background-color: #f4f5f7;
+  color: #00152a;
+  display: flex;
+  justify-content: center;
+}
+.menu .logo {
+  display: grid;
+  grid-template-columns: 30% 80%;
+  place-items: center;
+  padding: 1rem 0;
+  cursor: pointer;
+}
+.menu .item {
+  padding-top: 1rem;
+  cursor: pointer;
+}
+
+ul li {
+  list-style: none;
+}
+ul li a {
+  text-decoration: none;
+}
+
+.listProject svg {
+  margin-right: 0.5rem;
+}
+.listProject a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #00152a;
+  display: block;
+  transition: 0.3s;
+}/*# sourceMappingURL=Navbar.module.css.map */

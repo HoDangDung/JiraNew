@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Editor } from "@tinymce/tinymce-react";
 import categoryAPI from "../../../services/categoryAPI";
-import projectAPI from "../../../services/projectAPI";
 
 const AddProject = () => {
   const [category, setCategory] = useState([]);
@@ -27,12 +26,16 @@ const AddProject = () => {
   }, []);
 
   const editorRef = useRef(null);
+  if (editorRef.current) {
+    console.log(editorRef.current.getContent());
+  }
 
   const onSubmit = async (data) => {
     try {
       if (data) {
-        await projectAPI.createProject(data);
-        alert("Add Project successfully");
+        console.log(data);
+        // await projectAPI.createProject(data);
+        // alert("Add Project successfully");
       }
     } catch (error) {
       alert("Add Project Fail");
@@ -89,6 +92,7 @@ const AddProject = () => {
                 content_style:
                   "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
               }}
+              {...register("description")}
             />
           </div>
         </div>

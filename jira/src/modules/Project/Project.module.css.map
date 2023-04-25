@@ -1,1 +1,1 @@
-{"version":3,"sources":["Project.module.scss","Project.module.css"],"names":[],"mappings":"AAII;EACI,gBAAA;ACHR;ADMQ;EACI,yBARG;ACIf;ADQgB;EACI,kBAAA;EACA,qBAdL;EAeK,6BAAA;ACNpB","file":"Project.module.css"}
+{"version":3,"sources":["Project.module.scss","Project.module.css","../../_variable.scss"],"names":[],"mappings":"AAGI;EACI,gBAAA;ACFR;ADKQ;EACI,yBEPG;ADIf;ADOgB;EACI,kBAAA;EACA,qBEbL;EFcK,6BAAA;ACLpB","file":"Project.module.css"}
