@@ -3,7 +3,7 @@ import authAPI from "../services/authAPI";
 import { Navigate } from "react-router-dom";
 
 const initialState = {
-    user: JSON.parse(localStorage.getItem("user")) || null,
+    user: JSON.parse(localStorage.getItem("user")),
     loading: false,
     error: null,
 };
@@ -28,7 +28,7 @@ const authSlice = createSlice({
     reducers: {
         logout: (state, action) => {
             localStorage.removeItem("user");
-            return (<Navigate to="/" />, { ...state, user: null });
+            return { ...state, user: null };
         }
     },
     extraReducers: (builder) => {

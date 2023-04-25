@@ -19,7 +19,7 @@ const RootLayout = () => {
         <div className="col-lg-3 col-sm-5">
           <Navbar transition={transition} />
         </div>
-        <div className="col-lg-8 col-sm-6">
+        <div className="col-lg-7 col-sm-6">
           <Outlet />
         </div>
       </div>

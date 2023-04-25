@@ -8,7 +8,7 @@ import { Navigate } from "react-router-dom";
 const Login = () => {
   const dispatch = useDispatch();
   const { user, loading, error } = useSelector((state) => state.authSlice);
-  console.log(error);
+  console.log(user);
   const { register, handleSubmit } = useForm({
     defaultValues: {
       email: "",
@@ -17,12 +17,8 @@ const Login = () => {
     mode: "onTouched",
   });
 
-  const onSubmit = async (values) => {
-    console.log(values);
-    if(values){
-      dispatch(signin(values));
-      alert("Login success");
-    }
+  const onSubmit = (values) => {
+    dispatch(signin(values));
   };
 
   if (user) {
@@ -54,6 +50,7 @@ const Login = () => {
                 required
               />
             </div>
+            {error && <p>Tài khoản hoặc mật khẩu không đúng</p>}
             <div className="form-group text-center">
               <button
                 disabled={loading}

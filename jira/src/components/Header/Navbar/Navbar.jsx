@@ -1,16 +1,19 @@
 import React from "react";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { IoSettingsSharp } from "react-icons/io5";
-import { logout } from "../../../slices/authSlice";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../../slices/authSlice";
 import styles from "./Navbar.module.scss";
 
 const Navbar = ({ transition }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleLogout = () => {
-    console.log(logout);
+    dispatch(logout());
+    navigate("/");
   };
-
-  console.log(transition);
   return (
     <div>
       <div className={styles.menu}>
