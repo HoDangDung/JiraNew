@@ -6,7 +6,7 @@ import projectAPI from "../../../services/projectAPI";
 
 const AddProject = () => {
   const [category, setCategory] = useState([]);
-  const [contents, setContent] = useState("");
+  const editorRef = useRef(null);
   const { register, handleSubmit } = useForm({
     defaultValues: {
       projectName: "",
@@ -27,17 +27,12 @@ const AddProject = () => {
     })();
   }, []);
 
-  const editorRef = useRef(null);
-  if (editorRef.current) {
-    const content = editorRef.current.getContent();
-    setContent(content);
-    console.log(contents);
-  }
-
   const onSubmit = async (data) => {
     try {
       if (data) {
-        await projectAPI.createProject(data);
+        const content = editorRef.current.getContent();
+        console.log({ ...data, description: content });
+        await projectAPI.createProject({ ...data, description: content });
         alert("Add Project successfully");
       }
     } catch (error) {

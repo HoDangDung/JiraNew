@@ -3,10 +3,11 @@ import { Editor } from "@tinymce/tinymce-react";
 import { useForm } from "react-hook-form";
 import categoryAPI from "../../../services/categoryAPI";
 import projectAPI from "../../../services/projectAPI";
-import { Navigate } from "react-router-dom";
 
 const UpdateProject = ({ onClose, value, member }) => {
   const [category, setCategory] = useState([]);
+  const editorRef = useRef(null);
+  const { id, creator } = member;
   const { register, handleSubmit } = useForm({
     defaultValues: {
       id: 0,
@@ -28,18 +29,35 @@ const UpdateProject = ({ onClose, value, member }) => {
     })();
   }, []);
 
-  const editorRef = useRef(null);
-
   const onSubmit = async (data) => {
     try {
-      await projectAPI.updateProject(data);
+      const content = editorRef.current.getContent();
+      console.log({
+        ...data,
+        id: id,
+        creator: creator.id,
+        description: content,
+      });
+      await projectAPI.updateProject({
+        ...data,
+        id: id,
+        creator: creator.id,
+        description: content,
+      });
       alert("Update Project successfully");
     } catch (error) {
-      alert("Update Project Fail");
+      alert(error);
       console.log(error);
     }
   };
 
+  const handleChange = (evt)=>{
+    const {value, name} = evt.target;
+    
+  }
+
+  console.log(creator);
+  console.log(member);
   if (!value) {
     return null;
   }
@@ -72,7 +90,7 @@ const UpdateProject = ({ onClose, value, member }) => {
                     type="text"
                     className="form-control"
                     aria-describedby="helpId"
-                    placeholder={member.id}
+                    value={member.id}
                   />
                 </div>
                 <div className="form-group col-sm-4">
@@ -82,16 +100,15 @@ const UpdateProject = ({ onClose, value, member }) => {
                     className="form-control"
                     aria-describedby="helpId"
                     value={member.projectName}
+                    {...register("projectName")}
                   />
                 </div>
                 <div className="form-group col-sm-4">
                   <h5>Project Category</h5>
-                  <select className="form-control">
+                  <select className="form-control" {...register("categoryId")}>
                     <option>{member.categoryName}</option>
                     {category.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.projectCategoryName}
-                      </option>
+                      <option key={item.id}>{item.projectCategoryName}</option>
                     ))}
                   </select>
                 </div>
@@ -101,7 +118,6 @@ const UpdateProject = ({ onClose, value, member }) => {
                     <Editor
                       apiKey="2q64dgg6fecbk2vxho74u30vs8krm3j0jemmovo1gsdq90og"
                       onInit={(evt, editor) => (editorRef.current = editor)}
-                      initialValue="<p>This is the initial content of the editor.</p>"
                       init={{
                         height: 500,
                         menubar: false,
@@ -146,9 +162,7 @@ const UpdateProject = ({ onClose, value, member }) => {
               >
                 Cancel
               </button>
-              <button type="button" className="btn btn-primary">
-                Submit
-              </button>
+              <button className="btn btn-primary">Submit</button>
             </div>
           </form>
         </div>

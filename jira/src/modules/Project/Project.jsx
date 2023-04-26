@@ -7,6 +7,7 @@ import UpdateProject from "./UpdateProject/UpdateProject";
 import cn from "classnames";
 import styles from "./Project.module.css";
 import Assign from "../User/Assign/Assign";
+import AddProject from "./AddProject/AddProject";
 
 const Project = () => {
   const [project, setProject] = useState([]);

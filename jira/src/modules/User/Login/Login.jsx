@@ -8,7 +8,6 @@ import { Navigate } from "react-router-dom";
 const Login = () => {
   const dispatch = useDispatch();
   const { user, loading, error } = useSelector((state) => state.authSlice);
-  console.log(user);
   const { register, handleSubmit } = useForm({
     defaultValues: {
       email: "",
