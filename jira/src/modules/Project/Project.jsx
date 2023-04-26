@@ -11,7 +11,9 @@ import Assign from "../User/Assign/Assign";
 const Project = () => {
   const [project, setProject] = useState([]);
   const [members, setMembers] = useState([]);
-  const { value, setTrue, setFalse, toggle } = useBoolean(false);
+  const [open, setOpen] = useState(false);
+  const [assign, setAssign] = useState(0);
+  const { value, setTrue, setFalse } = useBoolean(false);
 
   useEffect(() => {
     (async () => {
@@ -23,6 +25,11 @@ const Project = () => {
       }
     })();
   }, []);
+
+  const handleToggle = (projectId) => {
+    setOpen(!open);
+    setAssign(projectId);
+  };
 
   const handleSelect = (member) => {
     setMembers(member);
@@ -40,12 +47,12 @@ const Project = () => {
     return result.join("");
   };
 
-  const charLimit = (content)=>{
-    if(content.length > 20){
-      return content.substring(0,20)+"...";
+  const charLimit = (content) => {
+    if (content.length > 20) {
+      return content.substring(0, 20) + "...";
     }
     return content;
-  }
+  };
 
   return (
     <>
@@ -87,7 +94,10 @@ const Project = () => {
                       {getChar(member.name)}
                     </button>
                   ))}
-                  <button className="btn btn-outline-info me-2 text-dark rounded-circle">
+                  <button
+                    className="btn btn-outline-info me-2 text-dark rounded-circle"
+                    onClick={() => handleToggle(item.id)}
+                  >
                     +
                   </button>
                 </td>
@@ -109,7 +119,7 @@ const Project = () => {
           </tbody>
         </table>
       </div>
-      <Assign value={value} onChange={toggle} />
+      <Assign open={open} handleToggle={handleToggle} projectId={assign} />
       <UpdateProject onClose={setFalse} value={value} member={members} />
     </>
   );

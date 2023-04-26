@@ -1,24 +1,43 @@
 import React, { useEffect, useState } from "react";
-import ErrorBoundary from "../../../components/ErrorBoundary/ErrorBoundary";
+import { useForm } from "react-hook-form";
 import userAPI from "../../../services/userAPI";
+import projectAPI from "../../../services/projectAPI";
 
-const Assign = ({ value, onChange }) => {
+const Assign = ({ open, handleToggle, projectId }) => {
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      userId: 0,
+      projectId: projectId,
+    },
+  });
   const [user, setUser] = useState([]);
+
   useEffect(() => {
     (async () => {
       try {
         const data = await userAPI.getUser();
         setUser(data);
       } catch (error) {
-        <ErrorBoundary />;
+        console.log(error);
       }
     })();
   }, []);
 
-  console.log(user);
-    if (!value) {
-      return null;
+  const onSubmit = async (data) => {
+    try {
+      if (data) {
+        console.log({ ...data, projectId });
+        await projectAPI.createAssign({ ...data, projectId });
+        alert("Add Members successfully");
+      }
+    } catch (error) {
+      alert(error);
     }
+  };
+
+  if (!open) {
+    return null;
+  }
   return (
     <>
       <div
@@ -31,21 +50,28 @@ const Assign = ({ value, onChange }) => {
           className="modal-dialog d-flex justify-content-center"
           role="document"
         >
-          <div className="modal-content w-75">
+          <form
+            className="modal-content w-75"
+            {...register("projectId")}
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div className="modal-header">
               <h5 className="modal-title">Add user</h5>
               <button
                 className="btn-close"
                 data-dismiss="modal"
                 aria-label="Close"
+                onClick={handleToggle}
               ></button>
             </div>
             <div className="modal-body">
               <div className="form-group">
-                <select className="form-control">
-                  <option></option>
-                  <option></option>
-                  <option></option>
+                <select className="form-control" {...register("userId")}>
+                  {user.map((item) => (
+                    <option value={item.userId} key={item.userId}>
+                      {item.name}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -54,14 +80,13 @@ const Assign = ({ value, onChange }) => {
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
+                onClick={handleToggle}
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
-                Save
-              </button>
+              <button className="btn btn-primary">Save</button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
       {/* Overlay */}
