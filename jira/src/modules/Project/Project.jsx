@@ -7,7 +7,6 @@ import UpdateProject from "./UpdateProject/UpdateProject";
 import cn from "classnames";
 import styles from "./Project.module.css";
 import Assign from "../User/Assign/Assign";
-import AddProject from "./AddProject/AddProject";
 
 const Project = () => {
   const [project, setProject] = useState([]);
@@ -40,10 +39,12 @@ const Project = () => {
   const getChar = (name) => {
     let result = [];
     result.push(name.charAt(0));
-    for (let index = 0; index < name.length; index++) {
+    for (let index in name) {
       if (name[index] === " ") {
-        result.push(...name[index + 1]);
+        index++;
+        result.push(...name[index]);
       }
+      index++;
     }
     return result.join("");
   };

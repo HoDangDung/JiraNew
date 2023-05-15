@@ -49,7 +49,7 @@ const Login = () => {
                 required
               />
             </div>
-            {error && <p>Tài khoản hoặc mật khẩu không đúng</p>}
+            {error && <p className="text-danger fw-bold">Tài khoản hoặc mật khẩu không đúng</p>}
             <div className="form-group text-center">
               <button
                 disabled={loading}

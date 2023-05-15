@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
+import faker from "@faker-js/faker";
 import Autocomplete from "@mui/material/Autocomplete";
 import projectAPI from "../../../services/projectAPI";
 import taskAPI from "../../../services/taskAPI";
 import statusAPI from "../../../services/statusAPI";
 import priorityAPI from "../../../services/priorityAPI";
 import userAPI from "../../../services/userAPI";
-import { useSelector } from "react-redux";
 
 // "taskName": "string",
 // "description": "string",
@@ -26,6 +26,7 @@ const CreateTask = () => {
   const [priorities, setPriority] = useState([]);
   const [taskTypes, setTaskTypes] = useState([]);
   const [users, setUser] = useState([]);
+  const editorRef = useRef(null);
 
   useEffect(() => {
     (async () => {
@@ -52,7 +53,7 @@ const CreateTask = () => {
       userId: 0,
     },
     defaultValues: {
-      listUserAssign: [0],
+      listUserAssign: [],
       taskName: "",
       description: "",
       statusId: "",
@@ -65,10 +66,31 @@ const CreateTask = () => {
     },
   });
 
-  const editorRef = useRef(null);
+  const onSubmit = async (data) => {
+    try {
+      const content = editorRef.current.getContent();
+      console.log({ ...data, description: content });
+      // await projectAPI.createTask(data);
+      alert("Create task successfully");
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
+  };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const assigns = Array.from(
+    users.map((user) => ({
+      name: user.name,
+      userId: user.userId,
+    }))
+  );
+
+  // const InviteModal = () => {
+  //   const [selectUsers, setSelectUsers] = useState([]);
+
+  // };
+  const handleSelectUsers = (_, value, reason) => {
+    console.log(value, reason);
   };
 
   return (
@@ -81,12 +103,12 @@ const CreateTask = () => {
         aria-hidden="true"
       >
         <div className="modal-dialog" role="document">
-          <div className="modal-content">
+          <form className="modal-content" onSubmit={handleSubmit(onSubmit)}>
             <div className="modal-header">
               <h3 className="modal-title">Create Task</h3>
             </div>
             <hr />
-            <form className="modal-body" onSubmit={handleSubmit(onSubmit)}>
+            <div className="modal-body">
               <div className="form-group">
                 <label>Project</label>
                 <select className="form-control" {...register("projectId")}>
@@ -130,15 +152,16 @@ const CreateTask = () => {
                     <label>Assignees</label>
                     <Autocomplete
                       multiple
-                      id="tags-outlined"
-                      options={users.map((item) => item.name)}
+                      options={users}
+                      getOptionLabel={(option) => (option.name)}
                       renderInput={(params) => (
                         <TextField
+                          key={params.userId}
                           {...params}
                           label="Name"
-                          className="form-control"
                         />
                       )}
+                      {...register("userId")}
                     />
                   </div>
                   <div className="form-group">
@@ -199,7 +222,6 @@ const CreateTask = () => {
                 <Editor
                   apiKey="2q64dgg6fecbk2vxho74u30vs8krm3j0jemmovo1gsdq90og"
                   onInit={(evt, editor) => (editorRef.current = editor)}
-                  initialValue="<p>This is the initial content of the editor.</p>"
                   init={{
                     height: 500,
                     menubar: false,
@@ -233,16 +255,12 @@ const CreateTask = () => {
                   }}
                 />
               </div>
-            </form>
-            <div className="modal-footer pt-3">
-              <button type="button" className="btn btn-secondary">
-                Cancel
-              </button>
-              <button type="button" className="btn btn-primary ms-3">
-                Submit
-              </button>
             </div>
-          </div>
+            <div className="modal-footer pt-3">
+              <button className="btn btn-secondary">Cancel</button>
+              <button className="btn btn-primary ms-3">Submit</button>
+            </div>
+          </form>
         </div>
       </div>
     </>

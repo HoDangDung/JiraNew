@@ -6,17 +6,9 @@ import projectAPI from "../../../services/projectAPI";
 
 const UpdateProject = ({ onClose, value, member }) => {
   const [category, setCategory] = useState([]);
+  const [name, setName] = useState("");
   const editorRef = useRef(null);
   const { id, creator } = member;
-  const { register, handleSubmit } = useForm({
-    defaultValues: {
-      id: 0,
-      projectName: "",
-      creator: 0,
-      description: "",
-      categoryId: "",
-    },
-  });
 
   useEffect(() => {
     (async () => {
@@ -51,13 +43,13 @@ const UpdateProject = ({ onClose, value, member }) => {
     }
   };
 
-  const handleChange = (evt)=>{
-    const {value, name} = evt.target;
-    
-  }
+  const changeName = (e) => {
+    e.preventDefault();
+    console.log({name: e.name});
+  };
 
-  console.log(creator);
-  console.log(member);
+  console.log(changeName);
+
   if (!value) {
     return null;
   }
@@ -71,7 +63,7 @@ const UpdateProject = ({ onClose, value, member }) => {
         aria-hidden="true"
       >
         <div className="modal-dialog modal-lg">
-          <form className="modal-content" onSubmit={handleSubmit(onSubmit)}>
+          <form className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">Edit Project</h5>
               <button
@@ -100,12 +92,11 @@ const UpdateProject = ({ onClose, value, member }) => {
                     className="form-control"
                     aria-describedby="helpId"
                     value={member.projectName}
-                    {...register("projectName")}
                   />
                 </div>
                 <div className="form-group col-sm-4">
                   <h5>Project Category</h5>
-                  <select className="form-control" {...register("categoryId")}>
+                  <select className="form-control">
                     <option>{member.categoryName}</option>
                     {category.map((item) => (
                       <option key={item.id}>{item.projectCategoryName}</option>
